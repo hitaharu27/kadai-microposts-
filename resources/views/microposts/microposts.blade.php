@@ -13,6 +13,15 @@
                     <div>
                         {{-- 投稿内容 --}}
                         <p class="mb-0">{!! nl2br(e($micropost->content)) !!}</p>
+                        @if (Auth::user()->is_favorite($micropost->id))  
+                        　　{!! Form::open(['route' => ['favorites.unfavorite', $micropost->id], 'method' => 'delete']) !!}
+                                    {!! Form::submit('Unfavorite', ['class' => "btn btn-dark btn-lg"]) !!}
+                            {!! Form::close() !!}
+                        @else
+                             {!! Form::open(['route' => ['favorites.favorite', $micropost->id]]) !!}
+                                    {!! Form::submit('Favorite', ['class' => "btn btn-success  btn-lg"]) !!}
+                             {!! Form::close() !!}
+                        @endif
                     </div>
                     <div>
                         @if (Auth::id() == $micropost->user_id)
